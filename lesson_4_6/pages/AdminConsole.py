@@ -1,8 +1,6 @@
 from BaseApp import BasePage
 from selenium.webdriver.common.by import By
 
-import time
-
 
 class AdminConsoleLocators:
     LOCATOR_MAIN_MENU = (By.ID, "box-apps-menu")
