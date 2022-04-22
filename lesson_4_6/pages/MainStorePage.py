@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 
 
 class MainStorePageLocators:
-    LOCATOR_PRODUCT = (By.CSS_SELECTOR, '[class="product column shadow hover-light"]')
+    LOCATOR_PRODUCT = (By.CLASS_NAME, 'product')
     LOCATOR_STICKER = (By.CSS_SELECTOR, 'div.sticker')
     LOCATOR_A = (By.TAG_NAME, 'a')
     LOCATOR_PRODUCT_NAME = (By.CLASS_NAME, 'name')
@@ -14,7 +14,7 @@ class MainStorePageHelper(BasePage):
 
     def check_one_sticker(self):
         products = self.find_elements(self.locators.LOCATOR_PRODUCT)
-        dict_product ={}
+        dict_product = {}
         for product in products:
             product_href = product.find_element(*self.locators.LOCATOR_A).get_attribute('href')
             stickers = product.find_elements(*self.locators.LOCATOR_STICKER)
