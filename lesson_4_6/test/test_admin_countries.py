@@ -23,8 +23,8 @@ def test_check_countries_sort(driver, countries_page):
         f'Countries are not sorted. \n "{result[1]}" before "{result[0]}"'
 
 
-def test_sort_country_timezone(driver, countries_page):
+def test_sort_country_geozone(driver, countries_page):
     is_sort = countries_page.check_sort_zone()
-    assert is_sort == True, f'Time Zone {is_sort[2]} {is_sort[3]} \n' \
+    assert is_sort == True, f'GeoZone {is_sort[2]} {is_sort[3]} \n' \
                             f'are not sorted. \n ' \
                             f'"{is_sort[1]}" before "{is_sort[0]}"'

@@ -9,8 +9,8 @@ def geozone_page(driver, auth_admin):
     yield countries_page
 
 
-def test_sort_name_countries(driver, geozone_page):
+def test_sort_name_geozone(driver, geozone_page):
     countries = geozone_page.get_all_countries()
     result = geozone_page.check_sort_geozone(countries)
     assert result == 'sort', \
-        f'Countries are not sorted. \n "{result[1]}" before "{result[0]}"'
+        f'Geozone are not sorted. \n "{result[1]}" before "{result[0]}"'
