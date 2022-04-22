@@ -20,7 +20,7 @@ def driver():
 
 
 @pytest.fixture(scope="module")
-def auth(driver):
+def auth_admin(driver):
     login_page = LoginHelper(driver)
     login_page.go_to_site("admin/")
     login_page.enter_username()

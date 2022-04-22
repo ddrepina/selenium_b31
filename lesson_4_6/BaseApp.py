@@ -21,7 +21,17 @@ class BasePage:
     def go_to_site(self, site=""):
         return self.driver.get(self.base_url + site)
 
+    def go_to_link(self, site):
+        return self.driver.get(site)
+
     def get_screen(self, name='none'):
         ts = datetime.now()
         print(f'{ts}_{name}')
         self.driver.save_screenshot(f'screen\\{ts}_{name}.png')
+
+    def is_sorted(self, lst, key=lambda x: x):
+        for i, el in enumerate(lst[1:]):
+            # Проверка идет в str.lower(), чтобы регистр не влиял на сортировку
+            if key(el).lower() < key(lst[i]).lower():  # i is the index of the previous element
+                return [key(el), key(lst[i])]
+        return True
