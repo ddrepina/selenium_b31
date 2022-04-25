@@ -1,5 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 from datetime import datetime
 
@@ -11,11 +12,11 @@ class BasePage:
         self.base_url = "http://localhost/litecart/"
 
     def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver,time).until(EC.presence_of_element_located(locator),
+        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
                                                       message=f"Can't find element by locator {locator}")
 
     def find_elements(self, locator, time=10):
-        return WebDriverWait(self.driver,time).until(EC.presence_of_all_elements_located(locator),
+        return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                       message=f"Can't find elements by locator {locator}")
 
     def go_to_site(self, site=""):
@@ -35,3 +36,12 @@ class BasePage:
             if key(el).lower() < key(lst[i]).lower():  # i is the index of the previous element
                 return [key(el), key(lst[i])]
         return True
+
+    def input_text(self, elem, text):
+        input_elem = self.find_element(elem)
+        input_elem.clear()
+        input_elem.send_keys(text)
+
+    def scroll_to_elem(self, elem):
+        actions = ActionChains(self.driver)
+        actions.move_to_element(elem).perform()
