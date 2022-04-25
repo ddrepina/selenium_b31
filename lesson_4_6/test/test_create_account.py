@@ -14,8 +14,8 @@ def test_create_account(driver):
     password = 'pass'
     country = 'United States'
     address1 = f'{city} {postcode} {ts}'
-    print(email)
-    print(password)
+    # print('email: ', email)
+    # print('password: ', password)
     create_account_page = CreateAccountHelper(driver)
     create_account_page.go_to_site('en/create_account')
     create_account_page.input_fname(fname)

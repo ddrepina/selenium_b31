@@ -89,8 +89,3 @@ class CreateAccountHelper(BasePage):
     def click_login(self):
         btn_login = self.find_element(self.locators.LOCATOR_BTN_LOGIN)
         btn_login.click()
-
-    def tmp(self):
-        print(1)
-        print(1)
-        print(1)
