@@ -4,3 +4,4 @@ from pages.MainStorePage import MainStorePageHelper
 from pages.AdminCountries import AdminCountriesHelper
 from pages.AdminGeoZone import AdminGeoZoneHelper
 from pages.CreateAccount import CreateAccountHelper
+from pages.AdminCatalog import AdminCatalogHelper

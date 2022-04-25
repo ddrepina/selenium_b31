@@ -4,9 +4,9 @@ from pages.AdminGeoZone import AdminGeoZoneHelper
 
 @pytest.fixture(scope='function')
 def geozone_page(driver, auth_admin):
-    countries_page = AdminGeoZoneHelper(driver)
-    countries_page.go_to_site('admin/?app=geo_zones&doc=geo_zones')
-    yield countries_page
+    geozone_page = AdminGeoZoneHelper(driver)
+    geozone_page.go_to_site('admin/?app=geo_zones&doc=geo_zones')
+    yield geozone_page
 
 
 def test_sort_name_geozone(driver, geozone_page):
