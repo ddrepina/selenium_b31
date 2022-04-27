@@ -1,8 +1,11 @@
+import random
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
-
+import os
 from datetime import datetime
+import time
 
 
 class BasePage:
@@ -25,10 +28,10 @@ class BasePage:
     def go_to_link(self, site):
         return self.driver.get(site)
 
-    def get_screen(self, name='none'):
-        ts = datetime.now()
-        print(f'{ts}_{name}')
-        self.driver.save_screenshot(f'screen\\{ts}_{name}.png')
+    def screenshot(self, name='none'):
+        ts = int(time.time())
+        path_screen = os.getcwd() + f'\\screen\\{ts}_{name}.png'
+        self.driver.save_screenshot(path_screen)
 
     def is_sorted(self, lst, key=lambda x: x):
         for i, el in enumerate(lst[1:]):
@@ -45,3 +48,11 @@ class BasePage:
     def scroll_to_elem(self, elem):
         actions = ActionChains(self.driver)
         actions.move_to_element(elem).perform()
+
+    def wait_text_present_in_element(self, elem, text, time=4):
+        wait = WebDriverWait(self.driver, time)
+        wait.until(EC.text_to_be_present_in_element(elem, str(text)))
+
+    def wait_open_new_win(self, current, time=20):
+        wait = WebDriverWait(self.driver, time)
+        wait.until(EC.new_window_is_opened(current))

@@ -11,6 +11,10 @@ class AdminCountriesLocators:
     LOCATOR_TR = (By.TAG_NAME, 'tr')
     LOCATOR_INPUT = (By.TAG_NAME, 'input')
 
+    LOCATOR_EDIT = (By.CSS_SELECTOR, '[title="Edit"]')
+    LOCATOR_EDIT_PAGE_NAME = (By.TAG_NAME, 'h1')
+    LOCATOR_EC_EXTERNAL_LINK_A = (By.XPATH, '//i[@class="fa fa-external-link"]/ancestor::a')
+
 
 class AdminCountriesHelper(BasePage):
     locators = AdminCountriesLocators()
@@ -60,17 +64,41 @@ class AdminCountriesHelper(BasePage):
             all_zone.append(name)
         return all_zone
 
-    def check_sort_zone(self):
-        all_countries_with_zone = self.get_all_countries_with_zone()
-        for country_with_zone in all_countries_with_zone:
-            # открываем страницу страны
-            self.go_to_link(all_countries_with_zone[country_with_zone])
-            # берем все зоны
-            all_zone = self.get_all_zone()
-            is_sort = self.is_sorted(all_zone)
-            if is_sort != True:
-                is_sort.append(country_with_zone)
-                is_sort.append(all_countries_with_zone[country_with_zone])
-                return is_sort
-            else:
-                return True
+    def check_sort_zone(self, all_countries_with_zone, country_with_zone):
+        # берем все зоны
+        all_zone = self.get_all_zone()
+        is_sort = self.is_sorted(all_zone)
+        if is_sort != True:
+            is_sort.append(country_with_zone)
+            is_sort.append(all_countries_with_zone[country_with_zone])
+            return is_sort
+        else:
+            return True
+
+    def click_edit_first_country(self):
+        self.find_element(self.locators.LOCATOR_EDIT).click()
+
+    def wait_open_edit_page(self, text):
+        self.wait_text_present_in_element(self.locators.LOCATOR_EDIT_PAGE_NAME, text)
+
+    def get_all_external_link_a(self):
+        return self.find_elements(self.locators.LOCATOR_EC_EXTERNAL_LINK_A)
+
+    # def get_current_handle(self):
+    #     return self.driver.current_window_handle
+
+    def get_open_handles(self):
+        return self.driver.window_handles
+
+    def click_link(self, elem, main_window):
+        elem.click()
+        self.wait_open_new_win(main_window)
+
+    def wait_new_win(self, main_window):
+        self.wait_open_new_win(main_window)
+
+    def switch_to_new_and_close(self, new_handle, main_hendle):
+        self.driver.switch_to.window(new_handle)
+        # self.screenshot(new_handle)
+        self.driver.close()
+        self.driver.switch_to.window(main_hendle)
