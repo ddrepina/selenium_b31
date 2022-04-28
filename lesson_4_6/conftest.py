@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.login import LoginHelper
@@ -14,7 +15,13 @@ def driver():
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=900,700")
     options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
+
+    caps = DesiredCapabilities().CHROME
+    caps['goog:loggingPrefs'] = {'performance': 'ALL', 'driver': 'ALL', 'browser': 'ALL'}
+
+    driver = webdriver.Chrome(ChromeDriverManager().install(),
+                              chrome_options=options,
+                              desired_capabilities=caps)
     yield driver
     driver.quit()
 

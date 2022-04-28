@@ -14,12 +14,12 @@ class BasePage:
         self.driver = driver
         self.base_url = "http://localhost/litecart/"
 
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
+    def find_element(self, locator, wait_time=10):
+        return WebDriverWait(self.driver, wait_time).until(EC.presence_of_element_located(locator),
                                                       message=f"Can't find element by locator {locator}")
 
-    def find_elements(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
+    def find_elements(self, locator, wait_time=10):
+        return WebDriverWait(self.driver, wait_time).until(EC.presence_of_all_elements_located(locator),
                                                       message=f"Can't find elements by locator {locator}")
 
     def go_to_site(self, site=""):
@@ -49,10 +49,18 @@ class BasePage:
         actions = ActionChains(self.driver)
         actions.move_to_element(elem).perform()
 
-    def wait_text_present_in_element(self, elem, text, time=4):
-        wait = WebDriverWait(self.driver, time)
+    def wait_text_present_in_element(self, elem, text, wait_time=4):
+        wait = WebDriverWait(self.driver, wait_time)
         wait.until(EC.text_to_be_present_in_element(elem, str(text)))
 
-    def wait_open_new_win(self, current, time=20):
-        wait = WebDriverWait(self.driver, time)
+    def wait_open_new_win(self, current, wait_time=20):
+        wait = WebDriverWait(self.driver, wait_time)
         wait.until(EC.new_window_is_opened(current))
+
+    def get_log_type(self):
+        print(self.driver.log_types)
+        return self.driver.log_types
+
+    def get_log_for_log_type(self, type_log):
+        for logs in self.driver.get_log(type_log):
+            print(logs)
