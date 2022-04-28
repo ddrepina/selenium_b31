@@ -1,8 +1,6 @@
-import time
-import random
-import os
 import pytest
 from pages.AdminCatalogCategory import AdminCatalogCategoryHelper
+import pytest_check as check
 
 
 @pytest.fixture(scope='function')
@@ -18,4 +16,5 @@ def test_open_category_liten_log(admcatalogcategory_page):
     assert 'browser' in type_logs, f'type log "browser" not in {type_logs}'
     for link in all_link:
         admcatalogcategory_page.go_to_link(link)
-        admcatalogcategory_page.get_log_for_log_type('browser')
+        logs = admcatalogcategory_page.get_log_for_log_type(link, 'browser')
+        check.is_none(logs)

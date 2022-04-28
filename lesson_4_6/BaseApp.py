@@ -61,6 +61,8 @@ class BasePage:
         print(self.driver.log_types)
         return self.driver.log_types
 
-    def get_log_for_log_type(self, type_log):
-        for logs in self.driver.get_log(type_log):
-            print(logs)
+    def get_log_for_log_type(self, link, type_log):
+        logs = self.driver.get_log(type_log)
+        if logs:
+            return {'link': link, 'logs': logs}
+        return None
