@@ -38,7 +38,7 @@ class PurchaseHelper(BasePage):
         return int(self.find_element(self.locators.LOCATOR_QUANTITY).text)
 
     def click_add_to_cart(self):
-        wait = WebDriverWait(self.driver, 1)
+        wait = WebDriverWait(self.driver, 2)
         try:
             wait.until(EC.visibility_of_element_located(self.locators.LOCATOR_SIZE))
             select = Select(self.find_element(self.locators.LOCATOR_SIZE))
