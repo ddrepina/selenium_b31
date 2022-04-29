@@ -46,8 +46,9 @@ class BasePage:
         input_elem.send_keys(text)
 
     def scroll_to_elem(self, elem):
-        actions = ActionChains(self.driver)
-        actions.move_to_element(elem).perform()
+        # actions = ActionChains(self.driver)
+        # actions.move_to_element(elem).perform()
+        elem.location_once_scrolled_into_view
 
     def wait_text_present_in_element(self, elem, text, wait_time=4):
         wait = WebDriverWait(self.driver, wait_time)
