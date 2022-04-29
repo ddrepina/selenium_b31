@@ -66,3 +66,18 @@ class BasePage:
         if logs:
             return {'link': link, 'logs': logs}
         return None
+
+    def parse_color(self, color):
+        color = color.split('(')
+        color = color[1].rstrip(color[1][-1])
+        color = color.split(',')
+        color = [int(x) for x in color]
+        return color
+
+    def value_of_css(self, elem, types_value):
+        css_values = {}
+        for val in types_value:
+            css_values[val] = elem.value_of_css_property(val)
+        if 'color' in types_value:
+            css_values['color'] = self.parse_color(css_values['color'])
+        return css_values
