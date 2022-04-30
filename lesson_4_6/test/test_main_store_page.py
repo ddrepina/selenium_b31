@@ -65,6 +65,17 @@ def test_check_product(driver):
         f"pp page regular_price = {pp_regular_price_value['regular_price_int']} \n" \
         f"pp paige campaign_price_value {pp_campaign_price_value['campaign_price_int']}"
 
+    # Проверка, что не затесалось лишних знаков
+    # СТРОКИ. Обычная цена на главноей странице РАВНА обычной цене на странице продукта
+    assert pp_regular_price_value['regular_price_txt'] == main_regular_price_value['regular_price_txt'], \
+        f"product page regular_price != main paige regular_price\n" \
+        f"product page regular_price = {pp_regular_price_value['regular_price_txt']} \n" \
+        f"main paige regular_price_value {main_regular_price_value['regular_price_txt']}"
+    # СТРОКИ. Акционная цена на главноей странице РАВНА акционной цене на странице продукта
+    assert pp_campaign_price_value['campaign_price_txt'] == main_campaign_price_value['campaign_price_txt'], \
+        f"product page campaign_price != main paige campaign_price\n" \
+        f"product page campaign_price = {pp_campaign_price_value['campaign_price_txt']} \n" \
+        f"main paige campaign_price_value {main_campaign_price_value['campaign_price_txt']}"
     assert main_store_page.check_grey(pp_regular_price_value['color']), \
         f'main regular price value is not grey.\n style is {pp_regular_price_value["text-decoration"]}'
     assert main_store_page.check_red(pp_campaign_price_value['color']), \

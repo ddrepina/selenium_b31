@@ -93,7 +93,7 @@ class MainStorePageHelper(BasePage):
     def get_pp_regular_price_and_values_css(self):
         elem = self.find_element(self.locators.LOCATOR_PRODUCT_REGULAR_PRICE)
         regular_price_and_value = {'regular_price_int': self.parse_price(elem.text),
-                                   'regular_priceе_txt': elem.text}
+                                   'regular_price_txt': elem.text}
         types_css = ['color', 'font-weight', 'font-size', 'text-decoration']
         regular_price_and_value.update(self.value_of_css(elem, types_css))
         return regular_price_and_value
@@ -101,7 +101,7 @@ class MainStorePageHelper(BasePage):
     def get_pp_campaign_price_and_values_css(self):
         elem = self.find_element(self.locators.LOCATOR_PRODUCT_CAMPAIGN_PRICE)
         regular_price_and_value = {'campaign_price_int': self.parse_price(elem.text),
-                                   'campaign_priceе_txt': elem.text}
+                                   'campaign_price_txt': elem.text}
         types_css = ['color', 'font-weight', 'font-size', 'text-decoration']
         regular_price_and_value.update(self.value_of_css(elem, types_css))
         return regular_price_and_value
