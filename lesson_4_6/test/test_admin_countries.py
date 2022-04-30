@@ -43,8 +43,9 @@ def test_open_new_win(countries_page):
     all_link = countries_page.get_all_external_link_a()
     # print(len(all_link))
     for link in all_link:
-        main_hendle = countries_page.get_open_handles()
-        countries_page.click_link(link, main_hendle)
-        new_hendles = countries_page.get_open_handles()
-        countries_page.switch_to_new_and_close(new_hendles[1], main_hendle[0])
-
+        main_handle = countries_page.get_current_handle()
+        countries_page.click_link_and_wit_open(link, [main_handle])
+        open_handle = countries_page.get_open_handles()
+        for handle in open_handle:
+            if handle != main_handle:
+                countries_page.switch_to_new_and_close(handle, main_handle)

@@ -84,13 +84,13 @@ class AdminCountriesHelper(BasePage):
     def get_all_external_link_a(self):
         return self.find_elements(self.locators.LOCATOR_EC_EXTERNAL_LINK_A)
 
-    # def get_current_handle(self):
-    #     return self.driver.current_window_handle
+    def get_current_handle(self):
+        return self.driver.current_window_handle
 
     def get_open_handles(self):
         return self.driver.window_handles
 
-    def click_link(self, elem, main_window):
+    def click_link_and_wit_open(self, elem, main_window):
         elem.click()
         self.wait_open_new_win(main_window)
 
