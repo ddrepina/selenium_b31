@@ -34,7 +34,7 @@ def driver_listener():
 
 
 @pytest.fixture(scope="session")
-def driver_с():
+def driver():
     options = webdriver.ChromeOptions()
     # options.add_argument("headless")
     options.add_argument("no-sandbox")
@@ -53,7 +53,7 @@ def driver_с():
 
 
 @pytest.fixture(scope="session")
-def driver():
+def driver_f():
     options = webdriver.FirefoxOptions()
     # options.add_argument("headless")
     options.add_argument("no-sandbox")

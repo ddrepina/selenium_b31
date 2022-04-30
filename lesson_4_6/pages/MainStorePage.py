@@ -81,10 +81,12 @@ class MainStorePageHelper(BasePage):
         return 'line-through' in line
 
     def check_campaign_size_big_regular_size(self, campaign_size, regular_size):
+        campaign_size = float(campaign_size.split('px')[0])
+        regular_size = float(regular_size.split('px')[0])
         return campaign_size > regular_size
 
     def check_campaign_weight_big_regular_wight(self, campaign_weight, regular_weight):
-        return campaign_weight > regular_weight
+        return float(campaign_weight) > float(regular_weight)
 
     def get_pp_product_name(self):
         campaigns = self.find_element(self.locators.LOCATOR_PP_PRODUCT_BOX)
