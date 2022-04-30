@@ -50,10 +50,14 @@ class MainStorePageHelper(BasePage):
         campaigns = self.find_element(self.locators.LOCATOR_BOX_CAMPAIGNS)
         return campaigns.find_element(*self.locators.LOCATOR_A).get_attribute('href')
 
+    def parse_price(self, price):
+        return int(price.split('$')[1])
+
     def get_regular_price_and_values_css(self):
         campaigns = self.find_element(self.locators.LOCATOR_BOX_CAMPAIGNS)
         elem = campaigns.find_element(*self.locators.LOCATOR_PRODUCT_REGULAR_PRICE)
-        regular_price_and_value = {'regular_price': elem.text}
+        regular_price_and_value = {'regular_price_int': self.parse_price(elem.text),
+                                   'regular_price_txt': elem.text}
         types_css = ['color', 'font-weight', 'font-size', 'text-decoration']
         regular_price_and_value.update(self.value_of_css(elem, types_css))
         return regular_price_and_value
@@ -61,7 +65,8 @@ class MainStorePageHelper(BasePage):
     def get_campaign_price_and_values_css(self):
         campaigns = self.find_element(self.locators.LOCATOR_BOX_CAMPAIGNS)
         elem = campaigns.find_element(*self.locators.LOCATOR_PRODUCT_CAMPAIGN_PRICE)
-        campaign_price_and_value = {'campaign_price': elem.text}
+        campaign_price_and_value = {'campaign_price_int': self.parse_price(elem.text),
+                                    'campaign_price_txt': elem.text}
         types_css = ['color', 'font-weight', 'font-size', 'text-decoration']
         campaign_price_and_value.update(self.value_of_css(elem, types_css))
         return campaign_price_and_value
@@ -87,14 +92,16 @@ class MainStorePageHelper(BasePage):
 
     def get_pp_regular_price_and_values_css(self):
         elem = self.find_element(self.locators.LOCATOR_PRODUCT_REGULAR_PRICE)
-        regular_price_and_value = {'regular_price': elem.text}
+        regular_price_and_value = {'regular_price_int': self.parse_price(elem.text),
+                                   'regular_priceе_txt': elem.text}
         types_css = ['color', 'font-weight', 'font-size', 'text-decoration']
         regular_price_and_value.update(self.value_of_css(elem, types_css))
         return regular_price_and_value
 
     def get_pp_campaign_price_and_values_css(self):
         elem = self.find_element(self.locators.LOCATOR_PRODUCT_CAMPAIGN_PRICE)
-        regular_price_and_value = {'campaign_price': elem.text}
+        regular_price_and_value = {'campaign_price_int': self.parse_price(elem.text),
+                                   'campaign_priceе_txt': elem.text}
         types_css = ['color', 'font-weight', 'font-size', 'text-decoration']
         regular_price_and_value.update(self.value_of_css(elem, types_css))
         return regular_price_and_value
