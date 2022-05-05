@@ -18,7 +18,7 @@ class PurchaseLocators:
     LOCATOR_SIZE = (By.NAME, 'options[Size]')
 
     LOCATOR_CHECKOUT = (By.XPATH, '//a[contains(text(), "Checkout »")]')
-    LOCATOR_CART_FORM = (By.NAME, 'cart_form')
+    LOCATOR_CART_PRODUCT = (By.NAME, 'cart_form')
     LOCATOR_NAME_PRODUCT = (By.TAG_NAME, 'strong')
     LOCATOR_SKU = (By.TAG_NAME, 'span')
     LOCATOR_REMOVE = (By.NAME, 'remove_cart_item')
@@ -58,20 +58,37 @@ class PurchaseHelper(BasePage):
     def click_checkout(self):
         self.find_element(self.locators.LOCATOR_CHECKOUT).click()
 
-    def get_name_product_and_remove_product(self):
-        wait = WebDriverWait(self.driver, 2)
-        try:
-            wait.until(EC.visibility_of_element_located(self.locators.LOCATOR_CART_FORM))
-            name_product = self.find_element(self.locators.LOCATOR_NAME_PRODUCT).text
-            self.find_element(self.locators.LOCATOR_REMOVE).click()
+    def wait_open_cart(self):
+        wait = WebDriverWait(self.driver, 5)
+        wait.until(EC.visibility_of_element_located(self.locators.LOCATOR_CART_PRODUCT))
 
+    def get_name_product_and_remove_product(self):
+        wait = WebDriverWait(self.driver, 5)
+        name_product = self.find_element(self.locators.LOCATOR_NAME_PRODUCT).text
+        self.find_element(self.locators.LOCATOR_REMOVE).click()
+        try:
             wait.until_not(EC.visibility_of_element_located(self.locators.LOCATOR_NO_ITEMS))
-            elem = (By.XPATH, f'//td[contains(text(), "{name_product}")]')
-            elem_product = self.find_element(elem)
-            return elem_product
         except TimeoutException:
             return 'no item'
+
+        elem = (By.XPATH, f'//td[contains(text(), "{name_product}")]')
+        elem_product = self.find_element(elem)
+        return elem_product
+
+    def remove_product(self):
+        elem_product = self.get_name_product_and_remove_product()
+        while elem_product != 'no item':
+            self.check_staleness(elem_product)
+            elem_product = self.get_name_product_and_remove_product()
 
     def check_staleness(self, elem_product):
         wait = WebDriverWait(self.driver, 3)
         wait.until(EC.staleness_of(elem_product))
+
+    def cart_is_empty(self):
+        wait = WebDriverWait(self.driver, 1)
+        try:
+            wait.until(EC.visibility_of_element_located(self.locators.LOCATOR_NO_ITEMS))
+        except:
+            self.screenshot('cart_is_not_empty')
+            return 'cart_is_not_empty'

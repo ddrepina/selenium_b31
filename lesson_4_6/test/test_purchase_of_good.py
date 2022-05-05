@@ -10,11 +10,12 @@ def test_add_new_product(driver):
         count_cart = purchase_page.get_count_cart()
         purchase_page.click_add_to_cart()
         purchase_page.wait_upd_cart(count_cart)
-    purchase_page.click_checkout()
 
-    elem_product = purchase_page.get_name_product_and_remove_product()
-    while elem_product != 'no item':
-        purchase_page.check_staleness(elem_product)
-        elem_product = purchase_page.get_name_product_and_remove_product()
+    purchase_page.click_checkout()
+    purchase_page.wait_open_cart()
+
+    purchase_page.remove_product()
+
+    assert purchase_page.cart_is_empty() != 'cart_is_not_empty', 'cart is not empty. see screenshot'
 
     # time.sleep(5)
