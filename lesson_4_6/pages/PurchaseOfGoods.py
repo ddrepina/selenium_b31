@@ -64,15 +64,17 @@ class PurchaseHelper(BasePage):
 
     def get_name_product_and_remove_product(self):
         wait = WebDriverWait(self.driver, 5)
+        # взять имя продукта, чтобы дальше найти его в таблице внизу
         name_product = self.find_element(self.locators.LOCATOR_NAME_PRODUCT).text
+        # поиск продукта в таблице Order Summary
+        elem = (By.XPATH, f'//td[contains(text(), "{name_product}")]')
+        elem_product = self.find_element(elem)
+        # удалить продукт
         self.find_element(self.locators.LOCATOR_REMOVE).click()
         try:
             wait.until_not(EC.visibility_of_element_located(self.locators.LOCATOR_NO_ITEMS))
         except TimeoutException:
             return 'no item'
-
-        elem = (By.XPATH, f'//td[contains(text(), "{name_product}")]')
-        elem_product = self.find_element(elem)
         return elem_product
 
     def remove_product(self):
